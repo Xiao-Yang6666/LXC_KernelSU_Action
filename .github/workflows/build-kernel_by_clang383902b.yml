@@ -144,6 +144,9 @@ jobs:
 
         echo "CONFIG_DOCKER=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
         echo "CONFIG_VLAN_8021Q=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+        sed -i '/CONFIG_MI_HARDWARE_ID/d' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+        echo "CONFIG_MI_HARDWARE_ID=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+        grep -q 'obj-y += mi_disp/mi_disp_notifier.o' techpack/display/msm/Makefile || echo 'obj-y += mi_disp/mi_disp_notifier.o' >> techpack/display/msm/Makefile
 
         sed -i '/CONFIG_ANDROID_PARANOID_NETWORK/d' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
         echo "# CONFIG_ANDROID_PARANOID_NETWORK is not set" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
